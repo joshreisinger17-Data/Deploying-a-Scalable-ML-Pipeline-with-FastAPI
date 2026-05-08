@@ -19,7 +19,8 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-    model = RandomForestClassifier()model.fit(X_train, y_train)
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
     return model
 
 
