@@ -1,28 +1,53 @@
 import pytest
-# TODO: add necessary import
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from ml.model import train_model
+from ml.model import compute_model_metrics
+from ml.model import process_data
 
-# TODO: implement the first test. Change the function name and input as needed
-def test_one():
+# Implement the first test.
+def test_train_model():
     """
-    # add description for the first test
+    Testing if train_model returns a RandomForestClassifier
     """
-    # Your code here
-    pass
+    X_train = pd.DataFrame({
+        'age': [20, 30, 40, 50]
+    })
+
+    y_train = [0, 1, 0, 1]
+    model = train_model(X_train, y_train)
+
+    assert isinstance(model, RandomForestClassifier) 
 
 
-# TODO: implement the second test. Change the function name and input as needed
-def test_two():
+# Implement the second test.
+def test_compute_model_metrics():
     """
-    # add description for the second test
+    Testing the correct metric values are returned.
     """
-    # Your code here
-    pass
+    y = [0, 1, 0, 1]
+    preds = [1, 0, 0, 1]
+
+    precision, recall, fbeta = compute_model_metrics(y, preds)
+
+    assert isinstance(precision, float)
+    assert isinstance(recall, float)
+    assert isinstance(fbeta, float)
 
 
-# TODO: implement the third test. Change the function name and input as needed
-def test_three():
+# Implement the third test.
+def test_process_data():
     """
-    # add description for the third test
+    Testing the process data has the expected shape.
     """
-    # Your code here
-    pass
+    test_data = pd.DataFrame({'age': [20, 30, 40], 'workclass': ['Private',
+        'Self-emp', 'Government'], 'salary': [0, 1, 1]
+    })
+
+    cat_features = ['workclass']
+    X, y, encoder, lb = process_data(test_data, categorical_features=cat_features,
+        label='salary', training=True
+    )
+
+    assert X.shape[0] == 3
+    assert len(y) == 3
